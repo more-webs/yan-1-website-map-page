@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Route Finder - Navigation & Directions</title>
-  <meta name="description" content="Plan your routes with our easy-to-use route finder. Get directions and navigate with live location tracking.">
+  <title>Mapora - Smart Interactive Maps</title>
+  <meta name="description" content="Mapora: A smart, interactive map that brings places, people, and information together.">
   
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
@@ -31,12 +31,57 @@
       width: 100%;
     }
     
-    /* Route Finder Toggle - Above Search Bar */
+    /* Mapora Title */
+    .mapora-title {
+      position: absolute;
+      top: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 10px 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    
+    .mapora-name {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .mapora-name span {
+      color: #4285f4;
+    }
+    
+    .mapora-description {
+      font-size: 12px;
+      font-weight: 500;
+      background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      background-size: 300% 300%;
+      animation: gradientAnimation 3s ease infinite;
+    }
+    
+    @keyframes gradientAnimation {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    /* Route Finder Toggle - Below Title */
     .panel-toggle {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      top: 16px;
+      top: 100px;
       z-index: 1000;
       background: white;
       border: none;
@@ -64,7 +109,7 @@
     /* Search Bar - Below Route Finder */
     .search-container {
       position: absolute;
-      top: 80px;
+      top: 160px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 1000;
@@ -247,6 +292,9 @@
       cursor: pointer;
       transition: background 0.2s;
       margin-top: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     
     .calculate-btn:hover {
@@ -303,24 +351,6 @@
       font-size: 14px;
     }
     
-    .simulate-btn {
-      width: 100%;
-      padding: 12px;
-      background: #34a853;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      margin-top: 12px;
-      transition: background 0.2s;
-    }
-    
-    .simulate-btn:hover {
-      background: #2d9249;
-    }
-    
     /* Live Location Button */
     .live-location-btn {
       position: absolute;
@@ -349,6 +379,112 @@
     .live-location-btn.active {
       background: #e8f0fe;
       color: #4285f4;
+    }
+    
+    /* Feedback Button */
+    .feedback-btn {
+      position: absolute;
+      right: 16px;
+      bottom: 80px;
+      z-index: 1000;
+      background: white;
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      transition: all 0.2s;
+    }
+    
+    .feedback-btn:hover {
+      background: #f5f5f5;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    }
+    
+    /* Feedback Popup */
+    .feedback-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      display: none;
+    }
+    
+    .feedback-popup.active {
+      display: flex;
+    }
+    
+    .feedback-content {
+      background: white;
+      border-radius: 12px;
+      padding: 24px;
+      width: 90%;
+      max-width: 400px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    
+    .feedback-header {
+      margin-bottom: 20px;
+    }
+    
+    .feedback-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .feedback-message {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    
+    .feedback-video {
+      margin: 15px 0;
+    }
+    
+    .feedback-video a {
+      color: #4285f4;
+      text-decoration: none;
+    }
+    
+    .feedback-video a:hover {
+      text-decoration: underline;
+    }
+    
+    .countdown {
+      font-size: 16px;
+      font-weight: 600;
+      color: #4285f4;
+      margin-top: 15px;
+    }
+    
+    /* Footer */
+    .footer {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      font-size: 12px;
+      color: #666;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 4px 12px;
+      border-radius: 20px;
     }
     
     /* Hide Zoom Controls */
@@ -388,12 +524,24 @@
         left: 16px;
         transform: none;
       }
+      
+      .mapora-title {
+        width: calc(100% - 32px);
+        left: 16px;
+        transform: none;
+      }
     }
   </style>
 </head>
 <body>
 
-<!-- Route Finder Toggle - Above Search Bar -->
+<!-- Mapora Title -->
+<div class="mapora-title">
+  <div class="mapora-name"><span>🧭</span> Mapora</div>
+  <div class="mapora-description">A smart, interactive map that brings places, people, and information together—helping you discover, share, and explore locations with clarity and confidence.</div>
+</div>
+
+<!-- Route Finder Toggle - Below Title -->
 <button class="panel-toggle" id="panelToggle" title="Open Route Finder">
   🧭
 </button>
@@ -439,13 +587,6 @@
         <span class="result-label">Distance</span>
         <span class="result-value" id="distanceValue">—</span>
       </div>
-      <div class="result-row">
-        <span class="result-label">Estimated Time</span>
-        <span class="result-value" id="durationValue">—</span>
-      </div>
-      <button class="simulate-btn" id="simulateBtn">
-        ▶ Simulate Travel
-      </button>
     </div>
   </div>
 </div>
@@ -457,6 +598,31 @@
 <button class="live-location-btn" id="liveLocationBtn" title="My Location">
   📍
 </button>
+
+<!-- Feedback Button -->
+<button class="feedback-btn" id="feedbackBtn" title="Give Feedback">
+  💬
+</button>
+
+<!-- Feedback Popup -->
+<div class="feedback-popup" id="feedbackPopup">
+  <div class="feedback-content">
+    <div class="feedback-header">
+      <div class="feedback-title">🔐 Login or sign up with GitHub to give feedback</div>
+    </div>
+    <div class="feedback-message">
+      <div class="feedback-video">
+        📺 Or click the video link <a href="https://archive.org/details/panfda" target="_blank">here</a> to know how to give feedback.
+      </div>
+      <div class="countdown" id="countdown">5 seconds</div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  © 2026 Mapora · Built with ❤️ by YAN
+</div>
 
 <!-- Leaflet JS -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -474,16 +640,6 @@ const NOMINATIM_BASE = "https://nominatim.openstreetmap.org/search";
 function formatDistance(meters) {
   if (meters >= 1000) return (meters / 1000).toFixed(1) + " km";
   return Math.round(meters) + " m";
-}
-
-function formatDuration(seconds) {
-  if (!isFinite(seconds)) return "—";
-  seconds = Math.round(seconds);
-  const h = Math.floor(seconds / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  if (h > 0) return h + "h " + m + "m";
-  if (m > 0) return m + " min";
-  return seconds + "s";
 }
 
 function haversine(lat1, lon1, lat2, lon2) {
@@ -566,8 +722,6 @@ let endMarker = null;
 let searchMarker = null;
 let liveMarker = null;
 let liveCircle = null;
-let simulateMarker = null;
-let simulateAnim = null;
 let watchId = null;
 
 // =====================
@@ -581,12 +735,13 @@ const endInput = document.getElementById('endInput');
 const calculateBtn = document.getElementById('calculateBtn');
 const routeResults = document.getElementById('routeResults');
 const distanceValue = document.getElementById('distanceValue');
-const durationValue = document.getElementById('durationValue');
-const simulateBtn = document.getElementById('simulateBtn');
 const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
 const searchSuggestions = document.getElementById('searchSuggestions');
 const liveLocationBtn = document.getElementById('liveLocationBtn');
+const feedbackBtn = document.getElementById('feedbackBtn');
+const feedbackPopup = document.getElementById('feedbackPopup');
+const countdownElement = document.getElementById('countdown');
 
 // =====================
 // Panel Toggle
@@ -605,6 +760,7 @@ closePanel.addEventListener('click', () => {
 // Search Functionality
 // =====================
 let searchTimeout = null;
+let currentSearchResult = null;
 
 searchInput.addEventListener('input', () => {
   clearTimeout(searchTimeout);
@@ -619,7 +775,9 @@ searchInput.addEventListener('input', () => {
     const places = await searchPlaces(query);
     if (places.length > 0) {
       searchSuggestions.innerHTML = places.map(p => 
-        '<div class="suggestion-item" data-lat="' + p.lat + '" data-lon="' + p.lon + '">' + p.name + '</div>'
+        `<div class="suggestion-item" data-lat="${p.lat}" data-lon="${p.lon}">
+          ${p.name}
+        </div>`
       ).join('');
       searchSuggestions.classList.add('active');
     } else {
@@ -629,15 +787,17 @@ searchInput.addEventListener('input', () => {
 });
 
 searchSuggestions.addEventListener('click', (e) => {
-  if (e.target.classList.contains('suggestion-item')) {
-    const lat = parseFloat(e.target.dataset.lat);
-    const lon = parseFloat(e.target.dataset.lon);
-    const name = e.target.textContent;
+  if (e.target.classList.contains('suggestion-item') || e.target.closest('.suggestion-item')) {
+    const item = e.target.closest('.suggestion-item');
+    const lat = parseFloat(item.dataset.lat);
+    const lon = parseFloat(item.dataset.lon);
+    const name = item.textContent.trim();
     
     searchInput.value = name;
     searchSuggestions.classList.remove('active');
     
     goToLocation(lat, lon, name);
+    currentSearchResult = { lat, lon, name };
   }
 });
 
@@ -649,6 +809,7 @@ searchBtn.addEventListener('click', async () => {
   if (place) {
     goToLocation(place.lat, place.lon, place.name);
     searchSuggestions.classList.remove('active');
+    currentSearchResult = place;
   } else {
     alert('Place not found');
   }
@@ -672,7 +833,7 @@ function goToLocation(lat, lon, name) {
   }
   
   searchMarker = L.marker([lat, lon]).addTo(map)
-    .bindPopup('<strong>' + name + '</strong>')
+    .bindPopup(`<strong>${name}</strong>`)
     .openPopup();
   
   map.setView([lat, lon], 14);
@@ -681,6 +842,8 @@ function goToLocation(lat, lon, name) {
 // =====================
 // Route Calculation
 // =====================
+let currentRoute = null;
+
 calculateBtn.addEventListener('click', async () => {
   const startQuery = startInput.value.trim();
   const endQuery = endInput.value.trim();
@@ -708,14 +871,19 @@ calculateBtn.addEventListener('click', async () => {
     // Add markers
     startMarker = L.marker([startPlace.lat, startPlace.lon])
       .addTo(map)
-      .bindPopup('<strong>Start:</strong> ' + startPlace.name);
+      .bindPopup(`<strong>Start:</strong> ${startPlace.name}`);
     
     endMarker = L.marker([endPlace.lat, endPlace.lon])
       .addTo(map)
-      .bindPopup('<strong>End:</strong> ' + endPlace.name);
+      .bindPopup(`<strong>End:</strong> ${endPlace.name}`);
     
     // Get route
     const route = await getRoute(startPlace.lat, startPlace.lon, endPlace.lat, endPlace.lon);
+    currentRoute = {
+      start: startPlace,
+      end: endPlace,
+      route: route
+    };
     
     // Draw route
     routeLayer = L.polyline(route.coords, {
@@ -729,7 +897,6 @@ calculateBtn.addEventListener('click', async () => {
     
     // Update results
     distanceValue.textContent = formatDistance(route.distance);
-    durationValue.textContent = formatDuration(route.duration);
     routeResults.classList.add('active');
     
   } catch (err) {
@@ -754,107 +921,9 @@ function clearRoute() {
     map.removeLayer(endMarker);
     endMarker = null;
   }
-  if (simulateMarker) {
-    map.removeLayer(simulateMarker);
-    simulateMarker = null;
-  }
-  if (simulateAnim) {
-    cancelAnimationFrame(simulateAnim);
-    simulateAnim = null;
-  }
   routeResults.classList.remove('active');
+  currentRoute = null;
 }
-
-// =====================
-// Route Simulation
-// =====================
-simulateBtn.addEventListener('click', () => {
-  if (!routeLayer) {
-    alert('No route to simulate');
-    return;
-  }
-  
-  const latlngs = routeLayer.getLatLngs();
-  if (latlngs.length < 2) return;
-  
-  // Build segments
-  const segments = [];
-  let totalDist = 0;
-  for (let i = 0; i < latlngs.length - 1; i++) {
-    const a = latlngs[i];
-    const b = latlngs[i + 1];
-    const d = haversine(a.lat, a.lng, b.lat, b.lng);
-    segments.push({ a, b, d });
-    totalDist += d;
-  }
-  
-  if (totalDist <= 0) return;
-  
-  // Clear existing simulation
-  if (simulateMarker) {
-    map.removeLayer(simulateMarker);
-  }
-  if (simulateAnim) {
-    cancelAnimationFrame(simulateAnim);
-  }
-  
-  // Create simulation marker
-  const simIcon = L.divIcon({
-    html: '<div style="background:#ea4335;width:16px;height:16px;border-radius:50%;border:3px solid white;box-shadow:0 2px 6px rgba(0,0,0,0.3);"></div>',
-    iconSize: [22, 22],
-    iconAnchor: [11, 11]
-  });
-  
-  simulateMarker = L.marker([latlngs[0].lat, latlngs[0].lng], { icon: simIcon }).addTo(map);
-  
-  // Animation
-  const speedKmh = 100; // km/h
-  const speedMps = speedKmh * 1000 / 3600;
-  
-  let segIndex = 0;
-  let segProgress = 0;
-  let lastTime = null;
-  
-  function animate(ts) {
-    if (!lastTime) lastTime = ts;
-    const dt = (ts - lastTime) / 1000;
-    lastTime = ts;
-    
-    let moveDist = speedMps * dt;
-    
-    while (moveDist > 0 && segIndex < segments.length) {
-      const seg = segments[segIndex];
-      const leftInSeg = seg.d - segProgress;
-      
-      if (moveDist < leftInSeg) {
-        segProgress += moveDist;
-        moveDist = 0;
-      } else {
-        moveDist -= leftInSeg;
-        segIndex++;
-        segProgress = 0;
-      }
-    }
-    
-    if (segIndex >= segments.length) {
-      const last = latlngs[latlngs.length - 1];
-      simulateMarker.setLatLng([last.lat, last.lng]);
-      return;
-    }
-    
-    const cur = segments[segIndex];
-    const frac = cur.d === 0 ? 0 : segProgress / cur.d;
-    const lat = cur.a.lat + (cur.b.lat - cur.a.lat) * frac;
-    const lng = cur.a.lng + (cur.b.lng - cur.a.lng) * frac;
-    
-    simulateMarker.setLatLng([lat, lng]);
-    map.panTo([lat, lng], { animate: true, duration: 0.1 });
-    
-    simulateAnim = requestAnimationFrame(animate);
-  }
-  
-  simulateAnim = requestAnimationFrame(animate);
-});
 
 // =====================
 // Live Location
@@ -927,6 +996,31 @@ liveLocationBtn.addEventListener('click', () => {
     }
   );
 });
+
+// =====================
+// Feedback Popup
+// =====================
+feedbackBtn.addEventListener('click', () => {
+  feedbackPopup.classList.add('active');
+  startCountdown();
+});
+
+function startCountdown() {
+  let count = 5;
+  countdownElement.textContent = `${count} seconds`;
+  
+  const countdownInterval = setInterval(() => {
+    count--;
+    countdownElement.textContent = `${count} seconds`;
+    
+    if (count <= 0) {
+      clearInterval(countdownInterval);
+      feedbackPopup.classList.remove('active');
+      window.open('https://github.com/OpenThoughtVoice/OpenThoughtVoice/discussions/10', '_blank');
+    }
+  }, 1000);
+}
+
 </script>
 
 </body>
