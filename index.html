@@ -379,7 +379,7 @@
     /* Live Location Button */
     .live-location-btn {
       position: absolute;
-      bottom: 100px;
+      bottom: 30px;
       right: 16px;
       z-index: 1000;
       background: white;
@@ -407,98 +407,6 @@
     .live-location-btn.active {
       background: #e8f0fe;
       color: #4285f4;
-    }
-    
-    /* Feedback Button */
-    .feedback-btn {
-      position: absolute;
-      right: 16px;
-      bottom: 30px; /* Moved down to accommodate new position */
-      z-index: 1000;
-      background: white;
-      border: none;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      transition: all 0.2s;
-    }
-    
-    .feedback-btn:hover {
-      background: #f5f5f5;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-    }
-    
-    /* Feedback Popup */
-    .feedback-popup {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-      display: none;
-    }
-    
-    .feedback-popup.active {
-      display: flex;
-    }
-    
-    .feedback-content {
-      background: white;
-      border-radius: 12px;
-      padding: 24px;
-      width: 90%;
-      max-width: 400px;
-      position: relative;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      text-align: center;
-    }
-    
-    .feedback-header {
-      margin-bottom: 20px;
-    }
-    
-    .feedback-title {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-    
-    .feedback-message {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 20px;
-      line-height: 1.5;
-    }
-    
-    .feedback-video {
-      margin: 15px 0;
-    }
-    
-    .feedback-video a {
-      color: #4285f4;
-      text-decoration: none;
-    }
-    
-    .feedback-video a:hover {
-      text-decoration: underline;
-    }
-    
-    .countdown {
-      font-size: 16px;
-      font-weight: 600;
-      color: #4285f4;
-      margin-top: 15px;
     }
     
     /* Footer */
@@ -629,26 +537,6 @@
   📍
 </button>
 
-<!-- Feedback Button -->
-<button class="feedback-btn" id="feedbackBtn" title="Give Feedback">
-  💬
-</button>
-
-<!-- Feedback Popup -->
-<div class="feedback-popup" id="feedbackPopup">
-  <div class="feedback-content">
-    <div class="feedback-header">
-      <div class="feedback-title">🔐 Login or sign up with GitHub to give feedback</div>
-    </div>
-    <div class="feedback-message">
-      <div class="feedback-video">
-        📺 Or click the video link <a href="https://archive.org/details/panfda" target="_blank">here</a> to know how to give feedback.
-      </div>
-      <div class="countdown" id="countdown">5 seconds</div>
-    </div>
-  </div>
-</div>
-
 <!-- Footer -->
 <div class="footer">
   © 2026 Mapora · Built with ❤️ by YAN
@@ -769,9 +657,6 @@ const searchInput = document.getElementById('searchInput');
 const searchBtn = document.getElementById('searchBtn');
 const searchSuggestions = document.getElementById('searchSuggestions');
 const liveLocationBtn = document.getElementById('liveLocationBtn');
-const feedbackBtn = document.getElementById('feedbackBtn');
-const feedbackPopup = document.getElementById('feedbackPopup');
-const countdownElement = document.getElementById('countdown');
 
 // =====================
 // Panel Toggle
@@ -958,26 +843,9 @@ function clearRoute() {
 // =====================
 // Live Location
 // =====================
-liveLocationBtn.addEventListener('click', () => {
+function startLiveLocation() {
   if (!navigator.geolocation) {
     alert('Geolocation is not supported by your browser');
-    return;
-  }
-  
-  if (watchId) {
-    // Stop watching
-    navigator.geolocation.clearWatch(watchId);
-    watchId = null;
-    liveLocationBtn.classList.remove('active');
-    
-    if (liveMarker) {
-      map.removeLayer(liveMarker);
-      liveMarker = null;
-    }
-    if (liveCircle) {
-      map.removeLayer(liveCircle);
-      liveCircle = null;
-    }
     return;
   }
   
@@ -1025,31 +893,41 @@ liveLocationBtn.addEventListener('click', () => {
       timeout: 10000
     }
   );
-});
-
-// =====================
-// Feedback Popup
-// =====================
-feedbackBtn.addEventListener('click', () => {
-  feedbackPopup.classList.add('active');
-  startCountdown();
-});
-
-function startCountdown() {
-  let count = 5;
-  countdownElement.textContent = `${count} seconds`;
-  
-  const countdownInterval = setInterval(() => {
-    count--;
-    countdownElement.textContent = `${count} seconds`;
-    
-    if (count <= 0) {
-      clearInterval(countdownInterval);
-      feedbackPopup.classList.remove('active');
-      window.open('https://github.com/OpenThoughtVoice/OpenThoughtVoice/discussions/10', '_blank');
-    }
-  }, 1000);
 }
+
+liveLocationBtn.addEventListener('click', () => {
+  if (!navigator.geolocation) {
+    alert('Geolocation is not supported by your browser');
+    return;
+  }
+  
+  if (watchId) {
+    // Stop watching
+    navigator.geolocation.clearWatch(watchId);
+    watchId = null;
+    liveLocationBtn.classList.remove('active');
+    
+    if (liveMarker) {
+      map.removeLayer(liveMarker);
+      liveMarker = null;
+    }
+    if (liveCircle) {
+      map.removeLayer(liveCircle);
+      liveCircle = null;
+    }
+    return;
+  }
+  
+  startLiveLocation();
+});
+
+// Automatically start live location when page loads
+window.addEventListener('load', () => {
+  // Small delay to ensure map is fully initialized
+  setTimeout(() => {
+    startLiveLocation();
+  }, 500);
+});
 
 </script>
 
